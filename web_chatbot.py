@@ -23,17 +23,81 @@ qa_pairs = load_faqs()
 html_template = """
 <!doctype html>
 <html>
-<head><title>FAQ Chatbot</title></head>
+<head>
+    <title>FAQ Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        .chat-container {
+            max-width: 700px;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .chat-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .chat-bubble {
+            background: #e0e0e0;
+            padding: 10px 15px;
+            border-radius: 15px;
+            margin-bottom: 10px;
+            max-width: 80%;
+        }
+        .bot {
+            background: #d1e7dd;
+            align-self: flex-start;
+        }
+        .user {
+            background: #cfe2ff;
+            align-self: flex-end;
+            text-align: right;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        input[type="submit"] {
+            padding: 10px;
+            font-size: 16px;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
 <body>
-    <h2>FAQ Chatbot</h2>
-    <form method="post">
-        <label for="question">Ask a question:</label><br>
-        <input type="text" id="question" name="question" size="80" required><br><br>
-        <input type="submit" value="Ask">
-    </form>
-    {% if response %}
-        <p><strong>Bot:</strong> {{ response }}</p>
-    {% endif %}
+    <div class="chat-container">
+        <div class="chat-header">FAQ Chatbot</div>
+        <form method="post">
+            <input type="text" id="question" name="question" placeholder="Ask a question..." required>
+            <input type="submit" value="Ask">
+        </form>
+        {% if response %}
+            <div class="chat-bubble user">{{ request.form['question'] }}</div>
+            <div class="chat-bubble bot"><strong>Bot:</strong> {{ response }}</div>
+        {% endif %}
+    </div>
 </body>
 </html>
 """
